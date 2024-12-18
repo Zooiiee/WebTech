@@ -1,84 +1,19 @@
 //Product.js     --- inside components
 
-import React, { Component } from 'react';
-import './product.css';
+import React from 'react';
+import './ProductCard.css';
 
-
-const products = [
-  { pr: '🍦 IceCream', name: 'ice cream', price: 50 },
-  { pr: '🍩 Doughnut', name: 'donuts', price: 190 },
-  { pr: '🍉 Watermelon', name: 'watermelon', price: 30 },
-  //{ pr: '🍣 Sushi', name: 'sushi', price: 200 }
-];
-
-
-export class Product extends Component {
-  state = {
-    cart: [],
-    total: 0
-  };
-
-
-  currencyOptions = {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  };
-
-
-  getTotal = () => {
-    return this.state.total.toLocaleString(undefined, this.currencyOptions);
-  };
-
-
-  add = (product) => {
-    this.setState(state => ({
-      cart: [...state.cart, product.name],
-      total: state.total + product.price
-    }));
-  };
-
-
-  remove = (product) => {
-    this.setState(state => {
-      const cart = [...state.cart];
-      const productIndex = cart.indexOf(product.name);
-      if (productIndex >= 0) {
-        cart.splice(productIndex, 1);
-        return {
-          cart,
-          total: state.total - product.price
-        };
-      }
-      return state;
-    });
-  };
-
-
-  render() {
-    return (
-      <div className="wrapper">
-        <div>
-          Shopping Cart: {this.state.cart.length} items
-        </div>
-        <div>Total: {this.getTotal()}</div>
-        <div>
-          {products.map(product => (
-            <div key={product.name}>
-              <div className="product">
-                <span role="img" aria-label={product.name}>{product.pr}</span>
-              </div>
-              <button onClick={() => this.add(product)}>Add</button>
-              <button onClick={() => this.remove(product)}>Remove</button>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
+export default function ProductCard({ pname, price, rating, features, additional }) {
+  return (
+    <div className="product-wrapper">
+      <h2>{pname}</h2>
+      <h3>Price: ₹{price}</h3>
+      <h4>Rating: {rating}⭐</h4>
+      <div>Features: {features.join(', ')}</div>
+      <button onClick={() => alert(additional)}>More Info</button>
+    </div>
+  );
 }
-
-
-export default Product;
 
 
 //app.js
